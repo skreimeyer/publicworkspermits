@@ -1,1 +1,1 @@
-web: gunicorn LR.wsgi.py
+web: gunicorn --chdir LR wsgi.py
