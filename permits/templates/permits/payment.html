@@ -1,0 +1,19 @@
+{% extends 'permits/base.html' %}
+
+{% block content %}
+{% if paid %}
+  <h2>Thank you for your payment!</h2>
+  <p>You have been charged ${{fee}}</p>
+  <a href="{% url 'permits:index' %}">Return to main page</a>
+{% else %}
+  <h2>Pay Your Application Fee</h2>
+  <form action="{% url 'permits:payment' %}" method="POST">
+    {% csrf_token %}
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key={{key}}
+            data-description="Application Fee"
+            data-amount="{{fee}}"
+            data-locale="auto"></script>
+  </form>
+{% endif %}
+{% endblock %}

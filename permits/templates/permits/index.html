@@ -1,0 +1,18 @@
+{% extends 'permits/base.html' %}
+
+{% block content %}
+{% if error_message %}
+<b>{{error_message}}</b>
+{% endif %}
+<h1>Permits</h1>
+<ul>
+  {% for permit in permit_list %}
+    <li>{{permit.name}}</li>
+  {% endfor %}
+</ul>
+
+<a href="{%url 'permits:sfha' %}">Apply for Special Flood Hazard Area permit</a>
+<a href="{%url 'permits:grading' %}">Apply for a grading permit</a>
+<a href="{%url 'permits:franchise' %}">Apply for a franchise permit</a>
+
+{% endblock %}

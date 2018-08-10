@@ -1,0 +1,82 @@
+{% extends 'permits/base.html' %}
+
+{% block content %}
+{% if message %}
+<b>{{message}}</b>
+{% endif %}
+<div class="application_list">
+<h1>My Applications</h1>
+<h2>Special Flood Hazard Area Permits</h2>
+<table>
+  <tr>
+    <td><b>Application Date</b></td>
+    <td><b>View or Update</b></td>
+    <td><b>Project Location</b></td>
+    <td><b>Approved</b></td>
+  </tr>
+  {% for permit in application %}
+  {% if permit.SFHA_permit %}
+  <tr>
+    <td>{{permit.date_created}}</td>
+    <td><a href="my-applications/{{permit.pk}}">View or Update</a></td>
+    <td>{{permit.project_info.project_address}}</td>
+    <td>{% if permit.approved %}
+      <span class="glyphicon glyphicon-ok"/>
+      {% else %}
+      <span class="glyphicon glyphicon-remove"/>
+      {% endif %}</td>
+  </tr>
+  {% endif %}
+  {% endfor %}
+</table>
+<h2>Grading Permits</h2>
+<table>
+  <tr>
+    <td><b>Application Date</b></td>
+    <td><b>View or Update</b></td>
+    <td><b>Project Location</b></td>
+    <td><b>Approved</b></td>
+  </tr>
+  {% for permit in application %}
+    {% if permit.grading_permit %}
+  <tr>
+    <td>{{permit.date_created}}</td>
+    <td><a href="my-applications/{{permit.pk}}">View or Update</a></td>
+    <td>{{permit.project_info.project_address}}</td>
+    <td>{% if permit.approved %}
+      <span class="glyphicon glyphicon-ok"/>
+      {% else %}
+      <span class="glyphicon glyphicon-remove"/>
+      {% endif %}</td>
+  </tr>
+  {% endif %}
+  {% endfor %}
+</table>
+<h2>Franchise Permits</h2>
+<table>
+  <tr>
+    <td><b>Application Date</b></td>
+    <td><b>View or Update</b></td>
+    <td><b>Project Location</b></td>
+    <td><b>Approved</b></td>
+  </tr>
+  {% for permit in application %}
+    {% if permit.franchise_permit %}
+  <tr>
+    <td>{{permit.date_created}}</td>
+    <td><a href="my-applications/{{permit.pk}}">View or Update</a></td>
+    <td>{{permit.project_info.project_address}}</td>
+    <td>{% if permit.approved %}
+      <span class="glyphicon glyphicon-ok"/>
+      {% else %}
+      <span class="glyphicon glyphicon-remove"/>
+      {% endif %}
+    </td>
+  </tr>
+  {% endif %}
+  {% endfor %}
+</table>
+</div>
+
+
+{% endblock %}

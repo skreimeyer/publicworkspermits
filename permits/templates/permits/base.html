@@ -1,0 +1,52 @@
+
+{% load staticfiles %}
+{% load extras %}
+<html>
+  <head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/permits.css' %}">
+  </head>
+  <body>
+    <div class="page_header">
+      <div class="logo">
+          <a href="https://www.littlerock.gov">
+           <img src="{% static "images/CLR_logo.svg" %}" alt="Little Rock"/>
+         </a>
+      </div>
+      <div class="menu_ribbon">
+        <p>This will be the menu ribbon. Link | Link | Link |</p>
+      </div>
+      <div class="login_block">
+        <div class="login_block_internal">
+          {% if user.is_authenticated %}
+            {% if user|in_group:"Applicant" %}
+              <span class="glyphicon glyphicon-user"></span>
+            {% endif %}
+            {% if user|in_group:"Administrator" %}
+              <span class="glyphicon glyphicon-plus"></span>
+            {% endif %}
+            {% if user|in_group:"Staff" %}
+              <span class="glyphicon glyphicon-eye-open"></span>
+            {% endif %}
+            {% if user|in_group:"Reviewer" %}
+              <span class="glyphicon glyphicon-ok"></span>
+            {% endif %}
+          <p><a href="{% url 'permits:user_logout' %}">log out</a></p>
+          {% else %}
+          <p><a href="{%url 'permits:user_login' %}">log in</a></p>
+          <p><a href="{%url 'permits:register' %}">Register</a></p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="header_graphic">
+      <img src="{% static "images/CLR_downtown.jpg" %}" alt="Down Town"/>
+    </div>
+    <div class="content_container">
+      <div class="row">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </body>

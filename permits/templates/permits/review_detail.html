@@ -1,0 +1,296 @@
+{% extends 'permits/base.html' %}
+
+{% block content %}
+<a href="{% url 'permits:review' %}"><button class="btn btn-primary">go back</button></a>
+<h1>Application Detail</h1>
+{% if error_message %}
+<p><i>{{error_message}}</i></p>
+{% endif %}
+<div class="application-detail">
+<p>Application date: {{application.date_created}}</p>
+<div class="applicant-block">
+  <h2>Applicant Information</h2>
+  <table>
+    <tr>
+      <td>First Name</td>
+      <td>{{application.applicant_info.first_name}}</td>
+    </tr>
+    <tr>
+      <td>Last Name</td>
+      <td>{{application.applicant_info.last_name}}</td>
+    </tr>
+    <tr>
+      <td>Phone Number</td>
+      <td>{{application.applicant_info.applicant_phone}}</td>
+    </tr>
+    <tr>
+      <td>Agent for</td>
+      <td>{{application.applicant_info.agent_for}}</td>
+    </tr>
+    <tr>
+      <td>Address</td>
+      <td>{{application.applicant_info.applicant_address}}</td>
+    </tr>
+    <tr>
+      <td>City</td>
+      <td>{{application.applicant_info.applicant_city}}</td>
+    </tr>
+    <tr>
+      <td>State</td>
+      <td>{{application.applicant_info.applicant_state}}</td>
+    </tr>
+    <tr>
+      <td>Zip</td>
+      <td>{{application.applicant_info.applicant_zip}}</td>
+    </tr>
+  </table>
+</div>
+<div class="project-block">
+  <h2>Project Information</h2>
+  <table>
+    <tr>
+      <td>Project Address</td>
+      <td>{{application.project_info.project_address}}</td>
+    </tr>
+    <tr>
+      <td>Project City</td>
+      <td>{{application.project_info.project_city}}</td>
+    </tr>
+    <tr>
+      <td>Project Zip</td>
+      <td>{{application.project_info.project_zip}}</td>
+    </tr>
+    <tr>
+      <td>Parcel ID</td>
+      <td>{{application.project_info.parcel_id}}</td>
+    </tr>
+    <tr>
+      <td>Zoning</td>
+      <td>{{application.project_info.zoning}}</td>
+    </tr>
+    <tr>
+      <td>Engineer of Record</td>
+      <td>{{application.project_info.engineer_of_record}}</td>
+    </tr>
+    <tr>
+      <td>Project Owner / Developer</td>
+      <td>{{application.project_info.project_owner}}</td>
+    </tr>
+    <tr>
+      <td>Project Description</td>
+      <td>{{application.project_info.project_description}}</td>
+    </tr>
+  </table>
+</div>
+{% if application.type.name == 'SFHA' %}
+<h2>Special Flood Hazard Area Information</h2>
+<div class="specific-block">
+  <div class="files-block">
+    <table>
+        <tr>
+          <td>Site Plan</td>
+          <td><a href="download/{{application.SFHA_permit.site_plan.name}}">{{application.SFHA_permit.site_plan.name}}</a></td>
+        </tr>
+        <tr>
+          <td>Elevation Certificate</td>
+          <td><a href="download/{{application.SFHA_permit.elevation_certificate.name}}">{{application.SFHA_permit.elevation_certificate.name}}</a></td>
+        </tr>
+        <tr>
+          <td>Flood Proofing Certificate</td>
+          <td><a href="download/{{application.SFHA_permit.flood_proofing.name}}">{{application.SFHA_permit.flood_proofing.name}}</a></td>
+        </tr>
+        <tr>
+          <td>No Rise Certificate</td>
+          <td><a href="download/{{application.SFHA_permit.no_rise.name}}">{{application.SFHA_permit.no_rise.name}}</a></td>
+        </tr>
+    </table>
+  </div>
+</div>
+{% endif %}
+{% if application.type.name == 'GP' %}
+<h2>Grading Information</h2>
+<div class="specific-block">
+  <div class="files-block">
+    <table>
+        <tr>
+          <td>Grading and drainage plan</td>
+          <td><a href="download/{{application.grading_permit.grading_plan.name}}">{{application.grading_permit.grading_plan.name}}</a></td>
+        </tr>
+        <tr>
+          <td>Threshold conditions</td>
+          <td>{{application.grading_permit.threshold_condition}}</td>
+        </tr>
+        <tr>
+          <td>Construction start date</td>
+          <td>{{application.grading_permit.construction_start}}</td>
+        </td>
+        <tr>
+          <td>Construction end</td>
+          <td>{{application.grading_permit.construction_end}}</td>
+        </tr>
+        <tr>
+          <td>Disturbed area</td>
+          <td>{{application.grading_permit.disturbed_area}} acres</td>
+        </tr>
+        <tr>
+          <td>Soil loss without controls</td>
+          <td>{{application.grading_permit.soil_loss_pre}} tons/acre-year</td>
+        </tr>
+        <tr>
+          <td>Soil loss with controls</td>
+          <td>{{application.grading_permit.soil_loss_post}} tons/acre-year</td>
+        </tr>
+        <tr>
+          <td>Maximum depth of cut or fill</td>
+          <td>{{application.grading_permit.max_depth_of_fill}} feet</td>
+        </tr>
+        <tr>
+          <td>Cut/fill volume</td>
+          <td>{{application.grading_permit.volume_of_fill}} cubic yards</td>
+        </tr>
+        <tr>
+          <td>Haul route</td>
+          <td>{{application.grading_permit.haul_route}}</td>
+        </tr>
+        <tr>
+          <td>Material hauled in</td>
+          <td>{{application.grading_permit.haul_in}} cubic yards</td>
+        </tr>
+        <tr>
+          <td>Source of haul material</td>
+          <td>{{application.grading_permit.source_of_haul_material}}</td>
+        </tr>
+        <tr>
+          <td>Material hauled out</td>
+          <td>{{application.grading_permit.haul_out}} cubic yards</td>
+        </tr>
+        <tr>
+          <td>Destination of haul material</td>
+          <td>{{application.grading_permit.destination_of_haul_material}}</td>
+        </tr>
+        <tr>
+          <td>Tracking pads</td>
+          <td>{{application.grading_permit.tracking_pads}}</td>
+        </tr>
+    </table>
+  </div>
+</div>
+{% endif %}
+{% if application.type.name == 'FR' %}
+<h2>Franchise Information</h2>
+<div class="specific-block">
+  <div class="files-block">
+    <table>
+        <tr>
+          <td>Site plan or drawings</td>
+          <td><a href="download/{{application.franchise_permit.drawings.name}}">{{application.franchise_permit.drawings.name}}</a></td>
+        </tr>
+        <tr>
+          <td>Point of contact</td>
+          <td>{{application.franchise_permit.contact}}</td>
+        </tr>
+        <tr>
+          <td>Contact phone number</td>
+          <td>{{application.franchise_permit.contact_phone}}</td>
+        </tr>
+        <tr>
+          <td>Contact email</td>
+          <td>{{application.franchise_permit.contact_email}}</td>
+        </tr>
+        <tr>
+          <td>Need for permit</td>
+          <td>{{application.franchise_permit.reason}}</td>
+        </tr>
+    </table>
+  </div>
+</div>
+{% endif %}
+</div>
+<div class="approvals">
+  <h2>Approvals</h2>
+  <table>
+    <tr>
+      <td><b>Department</b></td>
+      <td><b>Approved by</b></td>
+      <td><b>Date approved</b></td>
+      <td><b>Conditional approval</b></td>
+      <td><b>Final approval</b></td>
+    </tr>
+    {% for dept,info in approvals.items %}
+    <tr>
+      <td>{{dept}}</td>
+      <td>{{info.0}}</td>
+      <td>{{info.1}}</td>
+      <td>{{info.2}}</td>
+      <td>{{info.3}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+<div class="review-comments">
+<h2>Reviewer Comments</h2>
+<table>
+  <tr>
+    <td>Department</td>
+    <td>User</td>
+    <td>Date</td>
+    <td>Comment</td>
+  </tr>
+  {% for comment in comments %}
+  <tr>
+    <td>{{comment.department.name}}</td>
+    <td>{{comment.user.username}}</td>
+    <td>{{comment.date}}</td>
+    <td>{{comment.comment}}</td>
+  </tr>
+  {% endfor %}
+</div>
+</table>
+</div>
+<form method="post">
+  {% csrf_token %}
+<div class ="approval-form">
+  <h2>Approval</h2>
+  {{approveform.as_p}}
+  {% if approveform.errors %}
+      {% for field in approveform %}
+          {% for error in field.errors %}
+              <div class="alert alert-danger">
+                  <strong>{{ error|escape }}</strong>
+              </div>
+          {% endfor %}
+      {% endfor %}
+      {% for error in approveform.non_field_errors %}
+          <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+          </div>
+      {% endfor %}
+  {% endif %}
+</div>
+<div class="comment-form">
+<h2>Provide Comments</h2>
+  <table>
+    {{formset}}
+    {% if formset.errors %}
+      {% for form in formset %}
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </table>
+</div>
+  <button type="submit" class="btn btn-primary">submit comments</button>
+</form>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'permits/base.html' %}
+
+{% block content %}
+{% if error_message %}
+<b>{{error_message}}</b>
+{% endif %}
+<form method="POST" class="review">
+  {% csrf_token %}
+<h2>Filter Results</h2>
+{{form.as_table}}
+{% if form.errors %}
+    {% for field in appform %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in appform.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+<button type="submit" class="btn btn-primary">Filter</button>
+</form>
+<div class="review">
+<table>
+  <tr>
+    <td><b>Date</b></td>
+    <td><b>Type</b></td>
+    <td><b>Address</b></td>
+    <td><b>Applicant</b></td>
+    <td><b>Review</b></td>
+    <td><b>Approved</b></td>
+  </tr>
+{% for application in applications %}
+  <tr>
+    <td>{{application.date_created}}</td>
+    <td>{{application.type.name}}</td>
+    <td>{{application.project_info.project_address}}</td>
+    <td>{{application.applicant_info.last_name}}</td>
+    <td><a href="review/{{application.pk}}">Review</a></td>
+    <td>{{application.approved}}</td>
+  <tr>
+{% endfor %}
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if applications.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ applications.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ applications.number }} of {{ applications.paginator.num_pages }}.
+        </span>
+
+        {% if applications.has_next %}
+            <a href="?page={{ applications.next_page_number }}">next</a>
+            <a href="?page={{ applications.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
