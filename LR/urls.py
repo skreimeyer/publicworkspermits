@@ -21,5 +21,4 @@ urlpatterns = [
     path('',views.Home,name='home'),
     path('permits/',include('permits.urls',namespace="permits")),
     path('admin/', admin.site.urls),
-    path('permits/payments/',include('pinax.stripe.urls')),
 ]
