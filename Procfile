@@ -1,1 +1,1 @@
-web: gunicorn app:permits
+web: gunicorn LR.wsgi.py
